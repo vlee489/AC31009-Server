@@ -1,0 +1,13 @@
+{
+  "watch": [
+    "src"
+  ],
+  "ext": "ts,json,js",
+  "ignore": [
+    "mongoose.gen.ts"
+  ],
+  "events": {
+    "start": "yarn genTypes"
+  },
+  "exec": "ts-node src/index.js"
+}
