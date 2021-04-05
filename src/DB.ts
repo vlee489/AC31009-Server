@@ -16,5 +16,5 @@ const MongoOptions = {
     socketTimeoutMS: 45000,
 };
 
-export const DB = mongoose.createConnection(process.env.MONGO_URI, MongoOptions);
+export const DB = mongoose.createConnection(`${process.env.MONGO_URI}`, MongoOptions);
 

@@ -342,6 +342,7 @@ export type UserSchema = mongoose.Schema<UserDocument, UserModel>;
  */
 export interface User {
   email: string;
+  username: string;
   password: string;
   firstName: string;
   lastName: string;
@@ -380,6 +381,7 @@ export interface UserDocument
   extends mongoose.Document<mongoose.Types.ObjectId>,
     UserMethods {
   email: string;
+  username: string;
   password: string;
   firstName: string;
   lastName: string;

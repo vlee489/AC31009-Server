@@ -9,5 +9,5 @@
   "events": {
     "start": "yarn genTypes"
   },
-  "exec": "ts-node src/index.js"
+  "exec": "ts-node src/index.ts"
 }
