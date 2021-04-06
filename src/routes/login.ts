@@ -11,17 +11,17 @@ export const login = async (req, res) => {
         if (loginUser) {
             if (await loginUser.validatePassword(password)) {
                 const token = jwt.sign({
-                    ID: loginUser._id,
-                    Email: loginUser.email,
-                    Username: loginUser.username
+                    id: loginUser._id,
+                    email: loginUser.email,
+                    username: loginUser.username
                 }, `${process.env.SESSIONSECRECT}`);
                 // Send token
                 res.send({
                     success: true,
                     token,
                     details: {
-                        Email: loginUser.email,
-                        Username: loginUser.username
+                        email: loginUser.email,
+                        username: loginUser.username
                     }
                 })
                 return

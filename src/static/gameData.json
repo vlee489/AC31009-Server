@@ -1,0 +1,138 @@
+{
+    "version": "0.0.1",
+    "serverSupport": "0.0.1",
+    "clientSupport": "0.0.1",
+    "heros":[
+        {
+            "id": 1,
+            "name": "gatron",
+            "description": "A tank that moves slow, but can do a lot of damage",
+            "health": "50",
+            "shields": "4",
+            "attacks": [
+                {
+                    "id": 1,
+                    "name": "quick attack",
+                    "description": "Quick attack to your opponent.",
+                    "HPDamage": 10,
+                    "recoil": 0,
+                    "speed": 60
+                },
+                {
+                    "id": 2,
+                    "name": "Grunt Punch",
+                    "description": "High damage attack, but slow to initate.",
+                    "HPDamage": 30,
+                    "recoil": 0,
+                    "speed": 10
+                },
+                {
+                    "id": 3,
+                    "name": "Underhand Tackle",
+                    "description": "Tackle your oppoent to the ground.",
+                    "HPDamage": 20,
+                    "recoil": 10,
+                    "speed": 50
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Sova",
+            "description": "A fast agile hero that can move quickly through the battlefield.",
+            "health": "100",
+            "shields": "1",
+            "attacks": [
+                {
+                    "id": 1,
+                    "name": "quick attack",
+                    "description": "Quick attack to your opponent.",
+                    "HPDamage": 5,
+                    "recoil": 0,
+                    "speed": 100
+                },
+                {
+                    "id": 2,
+                    "name": "Fly Punch",
+                    "description": "Quick punch to your oppoent's body.",
+                    "HPDamage": 10,
+                    "recoil": 0,
+                    "speed": 80
+                },
+                {
+                    "id": 3,
+                    "name": "Sword Release",
+                    "description": "Sword that can be deployed with relative speed",
+                    "HPDamage": 20,
+                    "recoil": 0,
+                    "speed": 70
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Ranger",
+            "description": "A trained long range assign armed with a bow",
+            "health": "80",
+            "shields": "2",
+            "attacks": [
+                {
+                    "id": 1,
+                    "name": "quick shot",
+                    "description": "Quick shot to your oppent",
+                    "HPDamage": 10,
+                    "recoil": 0,
+                    "speed": 90
+                },
+                {
+                    "id": 2,
+                    "name": "Full Charge",
+                    "description": "A bow shot with a full charge, but takes longer to charge up",
+                    "HPDamage": 30,
+                    "recoil": 0,
+                    "speed": 50
+                },
+                {
+                    "id": 3,
+                    "name": "Self Defense",
+                    "description": "Quick defense attack against your attacker",
+                    "HPDamage": 5,
+                    "recoil": 0,
+                    "speed": 100
+                }
+            ]
+        }
+    ],
+    "items":[
+        {
+            "name": "Shield Repair",
+            "description": "Repair one of your shield levels",
+            "affect":[
+                {
+                    "status": "shield",
+                    "edit": 1
+                }
+            ]
+        },
+        {
+            "name": "HP Smothie",
+            "description": "Increase your current HP by 50",
+            "affect":[
+                {
+                    "status": "HP",
+                    "edit": 50
+                }
+            ]
+        },
+        {
+            "name": "Speed Energy Drink",
+            "description": "Increase you speed of attack for the game",
+            "affect":[
+                {
+                    "status": "speed",
+                    "edit": 10
+                }
+            ]
+        }
+    ]
+}

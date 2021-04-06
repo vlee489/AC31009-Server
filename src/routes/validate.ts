@@ -6,7 +6,7 @@ import {validateJWT} from '../functions/token'
 
 export const validateToken = async (req, res) => {
     if ('token' in req.body) {
-        if (validateJWT(req.body.token)) {
+        if ((await validateJWT(req.body.token)).auth) {
             res.send({
                 success: true,
                 valid: true
