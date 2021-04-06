@@ -92,6 +92,54 @@ Example Response
 }
 ```
 
+### `POST` openLobby [Authorization Required]
+Open a new lobby to play in.
+
+Body
+```json
+{
+    "open": false
+}
+```
+**Fields**
+- `open`: If the lobby is publically open or not either `true` | `false`
+
+Example Response
+```json
+{
+    "success": true,
+    "roomCode": "ROOMCODEHERE"
+}
+```
+
+## `GET` listLobbies [Authorization Required]
+Get a list of open lobbies available to join.
+
+Example Response
+```json
+{
+    "success": true,
+    "lobbies": [
+        {
+            "roomCode": "ROOMCODEHERE",
+            "player": [
+                {
+                    "username": "username of player in lobby"
+                }
+            ]
+        },
+        {
+            "roomCode": "ROOMCODEHERE",
+            "player": [
+                {
+                    "username": "username of player in lobby"
+                }
+            ]
+        }
+    ]
+}
+```
+
 ## Websocket API
 
 The Websocket API to communate with the game server. All Websocket connections require a header `Authorization` to be able to connect to to the server.

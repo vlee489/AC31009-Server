@@ -2,7 +2,6 @@
  * Validates JWT tokens used by the system
  */
 import jwt from 'jsonwebtoken'
-import { resolve } from 'node:path';
 
 interface user {
     id: string,
