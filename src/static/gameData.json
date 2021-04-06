@@ -105,6 +105,7 @@
     ],
     "items":[
         {
+            "id": 1,
             "name": "Shield Repair",
             "description": "Repair one of your shield levels",
             "affect":[
@@ -115,6 +116,7 @@
             ]
         },
         {
+            "id": 2,
             "name": "HP Smothie",
             "description": "Increase your current HP by 50",
             "affect":[
@@ -125,6 +127,7 @@
             ]
         },
         {
+            "id": 3,
             "name": "Speed Energy Drink",
             "description": "Increase you speed of attack for the game",
             "affect":[

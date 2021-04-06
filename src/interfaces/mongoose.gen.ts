@@ -290,6 +290,20 @@ export interface UserProfileHero {
 }
 
 /**
+ * Lean version of UserInventoryDocument
+ *
+ * This has all Mongoose getters & functions removed. This type will be returned from `UserDocument.toObject()`.
+ * ```
+ * const userObject = user.toObject();
+ * ```
+ */
+export interface UserInventory {
+  itemID?: number;
+  qty?: number;
+  _id: mongoose.Types.ObjectId;
+}
+
+/**
  * Lean version of UserDocument (type alias of `User`)
  *
  * Use this type alias to avoid conflicts with model names:
@@ -364,6 +378,7 @@ export interface User {
     loses?: number;
     heros: UserProfileHero[];
   };
+  inventory: UserInventory[];
   _id: mongoose.Types.ObjectId;
 }
 
@@ -378,6 +393,17 @@ export interface UserProfileHeroDocument
   plays?: number;
   wins?: number;
   loses?: number;
+  _id: mongoose.Types.ObjectId;
+}
+
+/**
+ * Mongoose Embedded Document type
+ *
+ * Type of `UserDocument["inventory"]` element.
+ */
+export interface UserInventoryDocument extends mongoose.Types.EmbeddedDocument {
+  itemID?: number;
+  qty?: number;
   _id: mongoose.Types.ObjectId;
 }
 
@@ -403,5 +429,6 @@ export interface UserDocument
     loses?: number;
     heros: mongoose.Types.DocumentArray<UserProfileHeroDocument>;
   };
+  inventory: mongoose.Types.DocumentArray<UserInventoryDocument>;
   _id: mongoose.Types.ObjectId;
 }

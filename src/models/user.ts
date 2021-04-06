@@ -62,7 +62,20 @@ const UserSchema: UserSchema = new Schema({
             wins: Number,
             loses: Number,
         }]
-    }
+    },
+    // User's inventory of items they can use
+    inventory:[{
+        itemID: {
+            type: Number,
+            require: true
+        },
+        qty:{
+            type: Number,
+            require: true,
+            default: 0,
+            min: 0
+        }
+    }]
 }, {
     collection: "users"
 });
