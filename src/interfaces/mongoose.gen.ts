@@ -74,11 +74,17 @@ export interface GameMovePlayerBStat {
 export interface GameMove {
   moveNumber?: number;
   playerA: {
-    moveID?: number;
+    move: {
+      moveType?: number;
+      id?: number;
+    };
     stats: GameMovePlayerAStat[];
   };
   playerB: {
-    moveID?: number;
+    move: {
+      moveType?: number;
+      id?: number;
+    };
     stats: GameMovePlayerBStat[];
   };
   _id: mongoose.Types.ObjectId;
@@ -221,11 +227,17 @@ export interface GameMovePlayerBStatDocument
 export interface GameMoveDocument extends mongoose.Types.EmbeddedDocument {
   moveNumber?: number;
   playerA: {
-    moveID?: number;
+    move: {
+      moveType?: number;
+      id?: number;
+    };
     stats: mongoose.Types.DocumentArray<GameMovePlayerAStatDocument>;
   };
   playerB: {
-    moveID?: number;
+    move: {
+      moveType?: number;
+      id?: number;
+    };
     stats: mongoose.Types.DocumentArray<GameMovePlayerBStatDocument>;
   };
   _id: mongoose.Types.ObjectId;

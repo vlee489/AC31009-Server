@@ -45,7 +45,20 @@ const GameSchema: GameSchema = new Schema({
         },
         // Stats for each player are calculated for after the move has been carried out
         playerA: {
-            moveID: Number, // Move player made this round
+            // Move player made this round
+            move: {
+                moveType: {
+                    // 0: attack, 1: item, 2: skip
+                    type: Number,
+                    min: 0,
+                    max: 2,
+                    validate : {
+                        validator : Number.isInteger,
+                        message   : '{VALUE} is not an integer value'
+                      }
+                },
+                id: Number
+            },
             // Stats of the player after opponent's move
             stats: [{
                 statID: Number,
@@ -53,7 +66,20 @@ const GameSchema: GameSchema = new Schema({
             }]
         },
         playerB: {
-            moveID: Number, // Move player made this round
+            // Move player made this round
+            move: {
+                moveType: {
+                    // 0: attack, 1: item, 2: skip
+                    type: Number,
+                    min: 0,
+                    max: 2,
+                    validate : {
+                        validator : Number.isInteger,
+                        message   : '{VALUE} is not an integer value'
+                      }
+                },
+                id: Number
+            },
             // Stats of the player after opponent's move
             stats: [{
                 statID: Number,
