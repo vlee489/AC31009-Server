@@ -2,6 +2,20 @@
     "version": "0.0.1",
     "serverSupport": "0.0.1",
     "clientSupport": "0.0.1",
+    "stats":[
+        {
+            "id": 0,
+            "name": "HP"
+        },
+        {
+            "id": 1,
+            "name": "recoil"
+        },
+        {
+            "id": 2,
+            "name": "speed"
+        }
+    ],
     "heros":[
         {
             "id": 1,

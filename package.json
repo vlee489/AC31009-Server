@@ -15,7 +15,12 @@
         "mongoose": "^5.11.15",
         "validator": "^13.5.2",
         "ioredis": "^4.23.0",
-        "express-async-router": "^0.1.15"
+        "express-async-router": "^0.1.15",
+        "ws": "^7.4.4"
+    },
+    "optionalDependencies": {
+        "bufferutil": "^4.0.3",
+        "utf-8-validate": "^5.0.4"
     },
     "devDependencies": {
         "@types/bcrypt": "^3.0.0",
