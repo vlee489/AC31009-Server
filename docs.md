@@ -30,6 +30,21 @@ Example Response
 }
 ```
 
+### `GET` gameData
+Get the game charcter and balance data for the game as currently used by the server.
+
+Example Response
+```json
+{
+  "version": "0.0.1",
+  "serverSupport": "0.0.1",
+  "clientSupport": "0.0.1",
+  "stats": [...],
+  "heros": [...],
+  "items": [...]
+}
+```
+
 ### `POST` validateToken
 Check if a `Authorization` token is valid to use.
 

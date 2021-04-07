@@ -7,6 +7,7 @@ import createAccount from './createAccount'
 import validateToken from './validate'
 import getInfo from './getInfo'
 import profile from './profile'
+import gameData from './gameData'
 
 // Tell routes to use bodyparses
 routes.use(bodyParser.json());
@@ -17,5 +18,6 @@ routes.post('/createAccount', createAccount)
 routes.post('/validateToken', validateToken)
 routes.get('/getInfo', getInfo)
 routes.get('/profile', profile)
+routes.get('/gameData', gameData)
 
 export default routes

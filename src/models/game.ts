@@ -48,10 +48,10 @@ const GameSchema: GameSchema = new Schema({
             // Move player made this round
             move: {
                 moveType: {
-                    // 0: attack, 1: item, 2: skip
+                    // 0: attack, 1: item, 2:shield, 3: skip
                     type: Number,
                     min: 0,
-                    max: 2,
+                    max: 3,
                     validate : {
                         validator : Number.isInteger,
                         message   : '{VALUE} is not an integer value'
