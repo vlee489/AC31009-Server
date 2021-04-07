@@ -19,7 +19,7 @@
         "moduleResolution": "node",
         "target": "ES2020",
         /* Strict Type-Checking Options */
-        "strictNullChecks": true,
+        "strictNullChecks": false,
         /* Debugging Options */
         "traceResolution": false,
         "listEmittedFiles": false,

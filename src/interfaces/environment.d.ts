@@ -8,6 +8,7 @@ declare global {
         NODE_ENV: 'development' | 'production';
         PORT: string;
         SESSIONSECRECT: string;
+        TOTPKEY: string
       }
     }
   }
