@@ -87,10 +87,10 @@ class GameRoom {
             reply.full = true;
         }
         if (this.playerA != null) {
-            reply.playerA = this.playerA.getStatus()
+            reply.playerA = this.playerA.getStatus();
         }
         if (this.playerB != null) {
-            reply.playerB = this.playerB.getStatus()
+            reply.playerB = this.playerB.getStatus();
         }
         return reply
     }
@@ -119,7 +119,7 @@ class GameRoom {
                 }
             }
         } catch {
-            return false
+            return false;
         }
     }
 
@@ -150,15 +150,15 @@ class GameRoom {
                 var attack = this.getAttack(this.playerA.heroID, playerAMove.id);
                 // if attack is null throw an error for invalid id
                 if (!attack) {
-                    throw new IdError("Invalid attackId")
+                    throw new IdError("Invalid attackId");
                 }
                 // Check the other play is doing a sheild
                 if (playerBMove.moveType === 3) {
                     if (this.playerB.shield <= 0) {
-                        throw new IdError("No shield for playerB")
+                        throw new IdError("No shield for playerB");
                     } else {
                         // If other player is using shield subtract one from shield
-                        this.playerB.shield = -1
+                        this.playerB.shield = -1;
                     }
                 } else {  // other player isn't using sheild
                     this.playerB.HP -= attack.HPDamage;  // Subtrack damage delt from other player's health
@@ -194,7 +194,7 @@ class GameRoom {
                                 this.playerA.shield += currentAffect.edit;
                                 break;
                             default:
-                                throw new IdError("Invalid affect statusID")
+                                throw new IdError("Invalid affect statusID");
                         }
                     }
                 }
@@ -204,7 +204,7 @@ class GameRoom {
             case 3:  // We can ignore as turn being skipped
                 break;
             default:
-                throw new moveTypeError("Invalid moveType")
+                throw new moveTypeError("Invalid moveType");
         }
     }
 
@@ -219,15 +219,15 @@ class GameRoom {
                 var attack = this.getAttack(this.playerB.heroID, playerBMove.id);
                 // if attack is null throw an error for invalid id
                 if (!attack) {
-                    throw new IdError("Invalid attackId")
+                    throw new IdError("Invalid attackId");
                 }
                 // Check the other play is doing a sheild
                 if (playerAMove.moveType === 3) {
                     if (this.playerA.shield <= 0) {
-                        throw new IdError("No shield for playerB")
+                        throw new IdError("No shield for playerB");
                     } else {
                         // If other player is using shield subtract one from shield
-                        this.playerB.shield = -1
+                        this.playerB.shield = -1;
                     }
                 } else {  // other player isn't using sheild
                     this.playerA.HP -= attack.HPDamage;  // Subtrack damage delt from other player's health
@@ -263,7 +263,7 @@ class GameRoom {
                                 this.playerB.shield += currentAffect.edit;
                                 break;
                             default:
-                                throw new IdError("Invalid affect statusID")
+                                throw new IdError("Invalid affect statusID");
                         }
                     }
                 }
@@ -273,7 +273,7 @@ class GameRoom {
             case 3:  // We can ignore as turn being skipped
                 break;
             default:
-                throw new moveTypeError("Invalid moveType")
+                throw new moveTypeError("Invalid moveType");
         }
     }
 
@@ -312,8 +312,8 @@ class GameRoom {
             winner: this.winner
 
         })
-        this.playerA.connection.send(jsonString)
-        this.playerB.connection.send(jsonString)
+        this.playerA.connection.send(jsonString);
+        this.playerB.connection.send(jsonString);
     }
 
     public calculateMoveSend(playerAMove: moveInput, playerBMove: moveInput): status {
@@ -324,16 +324,22 @@ class GameRoom {
             throw new moveTypeError("Invalid moveType");
         }
         var moveArray: Array<playerMove> = [];  // Hold the array of moves ran
+        // We ignore Shield and skip as they're delt by the calc flow for each player, however we send the move
+        if((playerAMove.moveType === 2) || (playerAMove.moveType === 3)){
+            moveArray.push({ player: 0, move: playerAMove });
+        }
+        if((playerBMove.moveType === 2) || (playerBMove.moveType === 3)){
+            moveArray.push({ player: 1, move: playerBMove });
+        }
         // Check and apply any items a player might have used
         if (playerAMove.moveType === 1) {
             this.playerAMoveCalc(playerAMove, playerBMove);
-            moveArray.push({ player: 0, move: playerAMove })
+            moveArray.push({ player: 0, move: playerAMove });
         }
         if (playerBMove.moveType === 1) {
             this.playerBMoveCalc(playerBMove, playerAMove);
-            moveArray.push({ player: 0, move: playerBMove })
+            moveArray.push({ player: 1, move: playerBMove });
         }
-        // We ignore Shield and skip as they're delt by the calc flow for each player
         // Create and append move.
         this.moves.push(new Move(playerAMove, playerBMove));
         if ((playerAMove.moveType === 0) && (playerBMove.moveType === 0)) {
@@ -342,44 +348,45 @@ class GameRoom {
             const Battack = this.getAttack(this.playerB.heroID, playerBMove.id);
             if (Aattack.speed > Battack.speed) {  // If the attack speed of A > B
                 this.playerAMoveCalc(playerAMove, playerBMove);  // Run player A's move calc
-                moveArray.push({ player: 0, move: playerAMove })
+                moveArray.push({ player: 0, move: playerAMove });
                 this.calculateGameState();  // Calculate Stats
                 if ((this.playerB.HP == 0) || (this.playerA.HP == 0)) {
                     // Check if either player is dead, if so end moves here
-                    this.sendMoveResponse(moveArray)
+                    this.sendMoveResponse(moveArray);
                 } else {  // If both players are alive 
                     this.playerBMoveCalc(playerBMove, playerAMove);  // Run player B's move calc
-                    moveArray.push({ player: 2, move: playerBMove })  // Add move to array
+                    moveArray.push({ player: 1, move: playerBMove });  // Add move to array
                     this.calculateGameState();  // Calculate Stats
-                    this.sendMoveResponse(moveArray)  // send to clients
+                    this.sendMoveResponse(moveArray);  // send to clients
                 }
             } else {  // If the attack speed of B > A
                 this.playerBMoveCalc(playerBMove, playerAMove);  // Run player A's move calc
-                moveArray.push({ player: 0, move: playerBMove })
+                moveArray.push({ player: 1, move: playerBMove });
                 this.calculateGameState();  // Calculate Stats
                 if ((this.playerB.HP == 0) || (this.playerA.HP == 0)) {
                     // Check if either player is dead, if so end moves here
-                    this.sendMoveResponse(moveArray)
+                    this.sendMoveResponse(moveArray);
                 } else {  // If both players are alive 
                     this.playerAMoveCalc(playerAMove, playerBMove);  // Run player B's move calc
-                    moveArray.push({ player: 2, move: playerAMove })  // Add move to array
+                    moveArray.push({ player: 0, move: playerAMove });  // Add move to array
                     this.calculateGameState();  // Calculate Stats
-                    this.sendMoveResponse(moveArray)  // send to clients
+                    this.sendMoveResponse(moveArray);  // send to clients
                 }
             }
             return this.status()
-        }
-        if (playerAMove.moveType === 0) {
+        }else if (playerAMove.moveType === 0) {
             this.playerAMoveCalc(playerAMove, playerBMove);  // Run player A's move calc
-            moveArray.push({ player: 0, move: playerAMove })
+            moveArray.push({ player: 0, move: playerAMove });
             this.calculateGameState();  // Calculate Stats
-            this.sendMoveResponse(moveArray)  // send to clients
+            this.sendMoveResponse(moveArray);  // send to clients
         } else if (playerBMove.moveType === 0) {
             this.playerBMoveCalc(playerBMove, playerAMove);  // Run player A's move calc
-            moveArray.push({ player: 0, move: playerBMove })
+            moveArray.push({ player: 1, move: playerBMove })
             this.calculateGameState();  // Calculate Stats
-            this.sendMoveResponse(moveArray)  // send to clients
+            this.sendMoveResponse(moveArray);  // send to clients
         }
-        return this.status()
+        return this.status();
     }
 }
+
+export default GameRoom;
