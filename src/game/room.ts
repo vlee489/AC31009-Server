@@ -34,6 +34,11 @@ interface attack {
     speed: number
 }
 
+interface playerMove {
+    player: number;
+    move: moveInput
+}
+
 class GameRoom {
     roomCode: string;
     playerA: null | Player;
@@ -42,13 +47,27 @@ class GameRoom {
     publicLobby: boolean;  // If the lobby is a public lobby
     moves: [Move];
     active: boolean;
+    winner: number | null;  // 0 = A, 1 = B, 2 = drawsa
 
     public constructor(publicLobby: boolean) {
         this.publicLobby = publicLobby;
         this.roomCode = String(totp(`${process.env.TOTPKEY}`));
         this.playerA = null;
         this.playerB = null;
-        this.openTime = luxon.DateTime.now()
+        this.openTime = luxon.DateTime.now();
+        this.winner = null;
+    }
+
+    /**
+     * Start the game room
+     * @returns boolean if the game was started
+     */
+    public start(): boolean {
+        if (this.playerA === null && this.playerB === null) {
+            return false
+        } else {
+            this.active = true;
+        }
     }
 
     /**
@@ -194,7 +213,7 @@ class GameRoom {
      * @param playerBMove player B's moves
      * @param playerAMove player A's moves
      */
-    private playerBMoveCalc(playerBMove:moveInput, playerAMove:moveInput){
+    private playerBMoveCalc(playerBMove: moveInput, playerAMove: moveInput) {
         switch (playerBMove.moveType) {
             case 0:
                 var attack = this.getAttack(this.playerB.heroID, playerBMove.id);
@@ -258,6 +277,45 @@ class GameRoom {
         }
     }
 
+    /**
+     * Calculates the game state
+     */
+    private calculateGameState() {
+        if ((this.playerA.HP <= 0) && (this.playerB.HP <= 0)) {
+            this.playerA.HP = 0;  // Make sure the lowest HP can be is 0
+            this.playerB.HP = 0;  // Make sure the lowest HP can be is 0
+            this.active = false;
+            this.winner = 2;
+
+        } else if (this.playerA.HP <= 0) {
+            this.playerA.HP = 0;  // Make sure the lowest HP can be is 0
+            this.active = false;
+            this.winner = 1;
+        } else if (this.playerB.HP <= 0) {
+            this.playerB.HP = 0;  // Make sure the lowest HP can be is 0
+            this.active = false;
+            this.winner = 0;
+        }
+    }
+
+    /**
+     * Send's the move data back to the two clients
+     */
+    private sendMoveResponse(moves: Array<playerMove>) {
+        const jsonString = JSON.stringify({
+            reply: "round",
+            round: this.moves.length,
+            moves: moves,
+            playerA: this.playerA.getStatus(),
+            playerB: this.playerB.getStatus(),
+            active: this.active,
+            winner: this.winner
+
+        })
+        this.playerA.connection.send(jsonString)
+        this.playerB.connection.send(jsonString)
+    }
+
     public calculateMoveSend(playerAMove: moveInput, playerBMove: moveInput): status {
         if ((this.playerA === null) || (this.playerB === null)) {
             throw new playerNullError("Full not full");
@@ -265,10 +323,63 @@ class GameRoom {
         if ((playerAMove.moveType < 0 || playerAMove.moveType > 3) || (playerBMove.moveType < 0 || playerBMove.moveType > 3)) {
             throw new moveTypeError("Invalid moveType");
         }
+        var moveArray: Array<playerMove> = [];  // Hold the array of moves ran
+        // Check and apply any items a player might have used
+        if (playerAMove.moveType === 1) {
+            this.playerAMoveCalc(playerAMove, playerBMove);
+            moveArray.push({ player: 0, move: playerAMove })
+        }
+        if (playerBMove.moveType === 1) {
+            this.playerBMoveCalc(playerBMove, playerAMove);
+            moveArray.push({ player: 0, move: playerBMove })
+        }
+        // We ignore Shield and skip as they're delt by the calc flow for each player
         // Create and append move.
         this.moves.push(new Move(playerAMove, playerBMove));
-        // Calculate player a move affects.
-
+        if ((playerAMove.moveType === 0) && (playerBMove.moveType === 0)) {
+            // If both players are making an attack
+            const Aattack = this.getAttack(this.playerA.heroID, playerAMove.id);
+            const Battack = this.getAttack(this.playerB.heroID, playerBMove.id);
+            if (Aattack.speed > Battack.speed) {  // If the attack speed of A > B
+                this.playerAMoveCalc(playerAMove, playerBMove);  // Run player A's move calc
+                moveArray.push({ player: 0, move: playerAMove })
+                this.calculateGameState();  // Calculate Stats
+                if ((this.playerB.HP == 0) || (this.playerA.HP == 0)) {
+                    // Check if either player is dead, if so end moves here
+                    this.sendMoveResponse(moveArray)
+                } else {  // If both players are alive 
+                    this.playerBMoveCalc(playerBMove, playerAMove);  // Run player B's move calc
+                    moveArray.push({ player: 2, move: playerBMove })  // Add move to array
+                    this.calculateGameState();  // Calculate Stats
+                    this.sendMoveResponse(moveArray)  // send to clients
+                }
+            } else {  // If the attack speed of B > A
+                this.playerBMoveCalc(playerBMove, playerAMove);  // Run player A's move calc
+                moveArray.push({ player: 0, move: playerBMove })
+                this.calculateGameState();  // Calculate Stats
+                if ((this.playerB.HP == 0) || (this.playerA.HP == 0)) {
+                    // Check if either player is dead, if so end moves here
+                    this.sendMoveResponse(moveArray)
+                } else {  // If both players are alive 
+                    this.playerAMoveCalc(playerAMove, playerBMove);  // Run player B's move calc
+                    moveArray.push({ player: 2, move: playerAMove })  // Add move to array
+                    this.calculateGameState();  // Calculate Stats
+                    this.sendMoveResponse(moveArray)  // send to clients
+                }
+            }
+            return this.status()
+        }
+        if (playerAMove.moveType === 0) {
+            this.playerAMoveCalc(playerAMove, playerBMove);  // Run player A's move calc
+            moveArray.push({ player: 0, move: playerAMove })
+            this.calculateGameState();  // Calculate Stats
+            this.sendMoveResponse(moveArray)  // send to clients
+        } else if (playerBMove.moveType === 0) {
+            this.playerBMoveCalc(playerBMove, playerAMove);  // Run player A's move calc
+            moveArray.push({ player: 0, move: playerBMove })
+            this.calculateGameState();  // Calculate Stats
+            this.sendMoveResponse(moveArray)  // send to clients
+        }
         return this.status()
     }
 }
