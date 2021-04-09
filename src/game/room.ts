@@ -20,7 +20,7 @@ interface status {
     active: boolean;
 };
 
-interface addData {
+export interface addData {
     player: number;
     success: boolean;
 }
@@ -39,7 +39,7 @@ interface playerMove {
     move: moveInput
 }
 
-class GameRoom {
+export class GameRoom {
     roomCode: string;
     playerA: null | Player;
     playerB: null | Player;
@@ -67,6 +67,18 @@ class GameRoom {
             return false
         } else {
             this.active = true;
+            const status = this.status();
+            const jsonString = JSON.stringify({
+                reply: "start",
+                status: {
+                    playerA: status.playerA,
+                    playerB: status.playerB,
+                    active: status.active
+                }
+            })
+            this.playerA.connection.send(jsonString);
+            this.playerB.connection.send(jsonString);
+            return true;
         }
     }
 
@@ -99,10 +111,13 @@ class GameRoom {
      * Add a player to the room
      * @returns If the action was successful or not
      */
-    public addPlayer(wsConnection: ws.WebSocket, username: string, playerID: string, heroID: number): boolean | addData {
+    public addPlayer(wsConnection: ws.WebSocket, username: string, playerID: string, heroID: number): addData {
         // if both player spots are used
         if ((this.playerA != null) && (this.playerB != null)) {
-            return false
+            return {
+                player: -1,
+                success: false
+            };
         }
         try {
             if (this.playerA === null) {
@@ -119,7 +134,10 @@ class GameRoom {
                 }
             }
         } catch {
-            return false;
+            return {
+                player: -1,
+                success: false
+            };
         }
     }
 
@@ -285,7 +303,7 @@ class GameRoom {
             this.playerA.HP = 0;  // Make sure the lowest HP can be is 0
             this.playerB.HP = 0;  // Make sure the lowest HP can be is 0
             this.active = false;
-            this.winner = 2;
+            this.winner = 2;  // draw
 
         } else if (this.playerA.HP <= 0) {
             this.playerA.HP = 0;  // Make sure the lowest HP can be is 0
