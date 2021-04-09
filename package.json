@@ -17,8 +17,7 @@
         "validator": "^13.5.2",
         "ioredis": "^4.23.0",
         "express-async-router": "^0.1.15",
-        "ws": "^7.4.4",
-        "totp-generator": "^0.0.9"
+        "ws": "^7.4.4"
     },
     "optionalDependencies": {
         "bufferutil": "^4.0.3",

@@ -4,12 +4,12 @@
 
 import { playerStatus, Player } from './player'
 import { moveInput, Move } from './moves'
-import luxon from 'luxon'
-import totp from 'totp-generator'
+import { DateTime } from "luxon";
+import crypto from 'crypto'
 import ws from 'ws';
 import { IdError, moveTypeError, playerNullError } from '../functions/errors'
-import heroByID from 'src/functions/gameData/heros';
-import itemByID from 'src/functions/gameData/items';
+import {heroByID} from '../functions/gameData/heros';
+import {itemByID} from '../functions/gameData/items';
 
 interface status {
     full: boolean,
@@ -43,7 +43,7 @@ export class GameRoom {
     roomCode: string;
     playerA: null | Player;
     playerB: null | Player;
-    openTime: luxon.DateTime;
+    openTime: DateTime;
     publicLobby: boolean;  // If the lobby is a public lobby
     moves: [Move];
     active: boolean;
@@ -51,10 +51,10 @@ export class GameRoom {
 
     public constructor(publicLobby: boolean) {
         this.publicLobby = publicLobby;
-        this.roomCode = String(totp(`${process.env.TOTPKEY}`));
+        this.roomCode = crypto.randomBytes(3).toString('hex')
         this.playerA = null;
         this.playerB = null;
-        this.openTime = luxon.DateTime.now();
+        this.openTime = DateTime.now()
         this.winner = null;
     }
 

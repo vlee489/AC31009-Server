@@ -9,6 +9,7 @@ export const profile = async (req: express.Request, res: express.Response) => {
         res.status(401).send({
             success: false,
         })
+        return;
     }else{
         user = await validateJWT(jwt)
     }
@@ -16,6 +17,7 @@ export const profile = async (req: express.Request, res: express.Response) => {
         res.status(401).send({
             success: false,
         })
+        return
     }
     const userProfile = await User.findOne({username: user.user.username})
     if(userProfile){
