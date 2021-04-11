@@ -159,6 +159,24 @@ Example Response
 
 The Websocket API to communate with the game server. All Websocket connections require a header `Authorization` to be able to connect to to the server.
 
+### `Message` PING
+Check the link is alive
+
+Message Example
+```json
+{
+  "action": "PING"
+}
+```
+
+Example Reponse
+```json
+{
+    "success":true,
+    "message":"PONG"
+}
+```
+
 ### `Message` Join Room
 Join a room for battle
 
@@ -185,16 +203,13 @@ Example Responses
     "success": true,
     "room": {
         "playerA": {
-            "username": "exampleUsername",
-            "hero": {
-                "id": 0,
-                "statEdits": [
-                    {
-                        "id": 0,
-                        "edit": 10
-                    }
-                ]
-            }
+            "playerUsername": "exampleUser1",
+            "playerID": "ID",
+            "heroID": 0,
+            "HP": 50,
+            "shield": 2,
+            "speed": 0,
+            "speedLength": 0,
         },
         "playerB": null
     }
@@ -230,3 +245,41 @@ Example Responses
 }
 ```
 
+### `Message` Round Info Return
+
+Example Reponse
+```json
+{
+    "reply": "round",
+    "round": 1,
+    "moves": [
+        {
+            "player": 0,
+            "move": {
+                "moveType": 0,
+                "id": 0
+            }
+        }
+    ],
+    "playerA": {
+        "playerUsername": "exampleUser1",
+        "playerID": "ID",
+        "heroID": 0,
+        "HP": 50,
+        "shield": 2,
+        "speed": 0,
+        "speedLength": 0,
+    },
+    "playerB": {
+        "playerUsername": "exampleUser2",
+        "playerID": "ID",
+        "heroID": 0,
+        "HP": 50,
+        "shield": 2,
+        "speed": 0,
+        "speedLength": 0,
+    },
+    "active": true,
+    "winner": null
+}
+```
