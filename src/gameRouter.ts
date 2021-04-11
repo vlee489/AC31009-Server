@@ -66,8 +66,8 @@ export function joinLobby(lobbyID: string, wsConnection: ws.WebSocket,
             wsConnection.send(JSON.stringify({
                 success: true,
                 action: "join",
-                playerA: room.game.playerA.getStatus(),
-                playerB: room.game.playerB.getStatus(),
+                playerA: room.game.getPlayerAStatus(),
+                playerB: room.game.getPlayerBStatus(),
             }))
         } else if (addReply.player === 1) {
             room.playerB = playerID;
@@ -75,8 +75,8 @@ export function joinLobby(lobbyID: string, wsConnection: ws.WebSocket,
             wsConnection.send(JSON.stringify({
                 success: true,
                 action: "join",
-                playerA: room.game.playerA.getStatus(),
-                playerB: room.game.playerB.getStatus(),
+                playerA: room.game.getPlayerAStatus(),
+                playerB: room.game.getPlayerBStatus(),
             }))
         } else {
             wsConnection.send(JSON.stringify({

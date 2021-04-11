@@ -18,11 +18,14 @@ export class Move{
     }
 
     public constructor(playerA: moveInput, playerB: moveInput){
-        this.playerA.moveType = playerA.moveType;
-        this.playerA.move = playerA.id;
-
-        this.playerB.moveType = playerB.moveType;
-        this.playerB.move = playerB.id;
+        this.playerA = {
+            moveType: playerA.moveType,
+            move: playerA.id
+        }
+        this.playerB = {
+            moveType: playerB.moveType,
+            move: playerB.id
+        }
     }
 }
 

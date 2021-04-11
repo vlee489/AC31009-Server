@@ -11,7 +11,7 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "resolveJsonModule": true,
-        "lib": [
+        "lib": [ 
             "ES2020",
             "esnext",
             "esnext.asynciterable"
@@ -44,5 +44,6 @@
     "exclude": [
         "node_modules/**"
     ],
-    "compileOnSave": false
+    "compileOnSave": false,
+    "sourceMap": true
 }

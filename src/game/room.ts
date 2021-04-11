@@ -45,7 +45,7 @@ export class GameRoom {
     playerB: null | Player;
     openTime: DateTime;
     publicLobby: boolean;  // If the lobby is a public lobby
-    moves: [Move];
+    moves: Array<Move>;
     active: boolean;
     winner: number | null;  // 0 = A, 1 = B, 2 = drawsa
 
@@ -56,6 +56,7 @@ export class GameRoom {
         this.playerB = null;
         this.openTime = DateTime.now()
         this.winner = null;
+        this.moves = []
     }
 
     /**
@@ -404,6 +405,22 @@ export class GameRoom {
             this.sendMoveResponse(moveArray);  // send to clients
         }
         return this.status();
+    }
+
+    public getPlayerAStatus(){
+        if(this.playerA != null){
+            return this.playerA.getStatus();
+        }else{
+            return null
+        }
+    }
+
+    public getPlayerBStatus(){
+        if(this.playerB != null){
+            return this.playerB.getStatus();
+        }else{
+            return null
+        }
     }
 }
 

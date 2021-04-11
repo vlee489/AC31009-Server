@@ -135,7 +135,7 @@
         },
         {
             "id": 2,
-            "name": "HP Smothie",
+            "name": "HP Smoothie",
             "description": "Increase your current HP by 50",
             "affect":[
                 {
