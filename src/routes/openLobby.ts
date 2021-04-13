@@ -23,7 +23,7 @@ export const openLobbyPost = async (req: express.Request, res: express.Response)
         if('open' in req.body){
             const lobby = openLobby(req.body.open);
             res.send({
-                success: false,
+                success: true,
                 roomCode: lobby
             })
             return
