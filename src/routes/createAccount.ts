@@ -14,12 +14,14 @@ export const createAccount = async (req, res) => {
                 success: false,
                 message: 'Username in use',
             })
+            return
         }
         if(emailCheck){
             res.status(409).send({
                 success: false,
                 message: 'Account with email already exists',
             })
+            return
         }
         // Create new account in DB
         try{
@@ -38,6 +40,7 @@ export const createAccount = async (req, res) => {
             }
         }catch{
             res.status(500).send()
+            return
         }
 
     }
