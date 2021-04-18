@@ -38,6 +38,21 @@ export function openLobby(open: boolean): string {
     return `${newRoom.roomCode}`;
 }
 
+export function checkRoomCode(lobbyID: string, playerID: string): boolean{
+    const room = masterLobbies[`${lobbyID}`] as gameData;  // Get room
+    if(room){
+        if((room.playerA != null) && (room.playerB != null)){
+            return false;
+        }
+        if((room.playerA === playerID) || (room.playerB === playerID)){
+            return false;
+        }
+        return true;
+    }else{
+        return false
+    }
+}
+
 export function joinLobby(lobbyID: string, wsConnection: ws.WebSocket,
     username: string, playerID: string, heroID: number): boolean {
     const room = masterLobbies[`${lobbyID}`] as gameData;  // Get room

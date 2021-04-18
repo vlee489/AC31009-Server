@@ -14,7 +14,7 @@ export const createAccount = async (req, res) => {
                 success: false,
                 message: 'Username in use',
             })
-            return
+            return 
         }
         if(emailCheck){
             res.status(409).send({
