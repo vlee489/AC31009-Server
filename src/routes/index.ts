@@ -9,6 +9,7 @@ import getInfo from './getInfo'
 import profile from './profile'
 import gameData from './gameData'
 import openLobbyPost from './openLobby'
+import checkRoomCodePost from './checkRoomCode'
 
 // Tell routes to use bodyparses
 routes.use(bodyParser.json());
@@ -18,6 +19,7 @@ routes.post('/login', login);
 routes.post('/createAccount', createAccount)
 routes.post('/validateToken', validateToken)
 routes.post('/openLobby', openLobbyPost)
+routes.post('/checkRoomCode', checkRoomCodePost)
 routes.get('/getInfo', getInfo)
 routes.get('/profile', profile)
 routes.get('/gameData', gameData)
