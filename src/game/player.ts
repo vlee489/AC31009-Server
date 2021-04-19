@@ -38,7 +38,7 @@ export class Player {
         } else {
             this.heroID = heroID;
             this.HP = heroByID[`${heroID}`].health;
-            this.shield = heroByID[`${heroID}`].shield;
+            this.shield = heroByID[`${heroID}`].shields;
             this.speed = 0;
             this.speedLength = 0;
         }

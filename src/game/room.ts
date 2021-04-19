@@ -47,7 +47,7 @@ export class GameRoom {
     publicLobby: boolean;  // If the lobby is a public lobby
     moves: Array<Move>;
     active: boolean;
-    winner: number | null;  // 0 = A, 1 = B, 2 = drawsa
+    winner: number | null;  // 0 = A, 1 = B, 2 = draws
 
     public constructor(publicLobby: boolean) {
         this.publicLobby = publicLobby;
