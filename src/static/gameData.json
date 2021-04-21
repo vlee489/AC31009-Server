@@ -1,5 +1,5 @@
 {
-    "version": "0.0.1",
+    "version": "0.0.4",
     "serverSupport": "0.0.1",
     "clientSupport": "0.0.1",
     "stats":[
@@ -23,10 +23,10 @@
     "heros":[
         {
             "id": 1,
-            "name": "gatron",
+            "name": "Gatron",
             "description": "A tank that moves slow, but can do a lot of damage",
-            "health": "50",
-            "shields": "4",
+            "health": 50,
+            "shields": 4,
             "attacks": [
                 {
                     "id": 1,
@@ -58,8 +58,8 @@
             "id": 2,
             "name": "Sova",
             "description": "A fast agile hero that can move quickly through the battlefield.",
-            "health": "100",
-            "shields": "1",
+            "health": 100,
+            "shields": 1,
             "attacks": [
                 {
                     "id": 1,
@@ -91,8 +91,8 @@
             "id": 3,
             "name": "Ranger",
             "description": "A trained long range assign armed with a bow",
-            "health": "80",
-            "shields": "2",
+            "health": 80,
+            "shields": 2,
             "attacks": [
                 {
                     "id": 1,
@@ -146,7 +146,7 @@
         },
         {
             "id": 3,
-            "name": "Speed Energy Drink",
+            "name": "Speed Candy",
             "description": "Increase you speed of attack for the game",
             "affect":[
                 {
