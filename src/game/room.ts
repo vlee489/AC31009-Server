@@ -172,7 +172,7 @@ export class GameRoom {
                     throw new IdError("Invalid attackId");
                 }
                 // Check the other play is doing a sheild
-                if (playerBMove.moveType === 3) {
+                if (playerBMove.moveType === 2) {
                     if (this.playerB.shield <= 0) {
                         throw new IdError("No shield for playerB");
                     } else {
@@ -241,7 +241,7 @@ export class GameRoom {
                     throw new IdError("Invalid attackId");
                 }
                 // Check the other play is doing a sheild
-                if (playerAMove.moveType === 3) {
+                if (playerAMove.moveType === 2) {
                     if (this.playerA.shield <= 0) {
                         throw new IdError("No shield for playerB");
                     } else {
