@@ -177,7 +177,7 @@ export class GameRoom {
                         throw new IdError("No shield for playerB");
                     } else {
                         // If other player is using shield subtract one from shield
-                        this.playerB.shield = -1;
+                        this.playerB.shield -= 1;
                     }
                 } else {  // other player isn't using sheild
                     this.playerB.HP -= attack.HPDamage;  // Subtrack damage delt from other player's health
@@ -246,7 +246,7 @@ export class GameRoom {
                         throw new IdError("No shield for playerB");
                     } else {
                         // If other player is using shield subtract one from shield
-                        this.playerB.shield = -1;
+                        this.playerA.shield -= 1;
                     }
                 } else {  // other player isn't using sheild
                     this.playerA.HP -= attack.HPDamage;  // Subtrack damage delt from other player's health
