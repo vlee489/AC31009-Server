@@ -157,7 +157,7 @@ Example Response
 
 ## Websocket API
 
-The Websocket API to communate with the game server. All Websocket connections require a header `Authorization` to be able to connect to to the server.
+The Websocket API to communate with the game server. All Websocket connections require a header `Authorization` with the token from LOGIN to be able to connect to to the server. Else server will immeditly close the WS connection.
 
 ### `Message` PING
 Check the link is alive
