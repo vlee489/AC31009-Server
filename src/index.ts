@@ -9,6 +9,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Server related imports
 import http from 'http';
+import https from 'https';
+import fs from 'fs'
 const express = require('express');
 import ws from 'ws';
 import routes from './routes'
@@ -21,7 +23,28 @@ const app = express();
 // Use routes
 app.use('/', routes)
 // Start HTTP server
-const httpServer = http.createServer(app);
+var httpServer = null;
+if (process.env.NODE_ENV === 'production') {
+    /*
+    In an actual large scale deployment instead of setting up HTTPS/WSS here you would use
+    a proxy such ar NGINX or Apache to hand all the secure connections and then have it
+    internally forward the request to the node.JS application. Due to the nature of this 
+    project, the time needed to fully setup NGINX would cut into time I would have to code.
+    So I've setup the secure connection certs here instead.
+    */
+    https.createServer(
+        {
+            // Pulls in certs file locations via enviorment variables
+            key: fs.readFileSync(process.env.CERTKEY),
+            cert: fs.readFileSync(process.env.CERT),
+            ca: fs.readFileSync(process.env.CA),
+        },
+        app
+    )
+} else {
+    // if we not in production mode we lauch without https/wss and use http/ws (i.e not secure)
+    httpServer = http.createServer(app);
+}
 // Start websocket 
 const wss = new ws.Server({ server: httpServer });
 
