@@ -23,6 +23,11 @@ CERT = path_to_cert.pem
 CA = path_to_chain.pem
 ```
 
+**IMPORTANT**
+When runing with `NODE_ENV` set to `production` you are required to provide paths to the `CERTKEY`, `CERT` and `CA` files for SSL encryption. You can
+get SSL certs for your domain via [Lets Encrypt](https://letsencrypt.org/). When runinng in any other `NODE_ENV`, the server will be started without SSL
+in development mode.
+
 ## Install and Operation
 
 ### Initial Install

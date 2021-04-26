@@ -1,10 +1,12 @@
 /*
 Runs all the code for the API
 */
+
+require('dotenv').config();
+
 //Env setup
 if (process.env.NODE_ENV !== 'production') {
     console.warn("RUNNING IN DEV MODE! Do not use in production!")
-    require('dotenv').config();
 }
 
 // Server related imports
@@ -32,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
     project, the time needed to fully setup NGINX would cut into time I would have to code.
     So I've setup the secure connection certs here instead.
     */
-    https.createServer(
+    httpServer = https.createServer(
         {
             // Pulls in certs file locations via enviorment variables
             key: fs.readFileSync(process.env.CERTKEY),

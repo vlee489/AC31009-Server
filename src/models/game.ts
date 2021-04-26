@@ -1,7 +1,7 @@
 /**
  * Game Mongoose Model
  */
-import { DB } from "../db"
+import { DB } from "../DB"
 import mongoose from "mongoose";
 
 const { Schema } = mongoose;
