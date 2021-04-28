@@ -8,8 +8,9 @@ import { DateTime } from "luxon";
 import crypto from 'crypto'
 import ws from 'ws';
 import { IdError, moveTypeError, playerNullError } from '../functions/errors'
-import {heroByID} from '../functions/gameData/heros';
-import {itemByID} from '../functions/gameData/items';
+import { heroByID } from '../functions/gameData/heros';
+import { itemByID } from '../functions/gameData/items';
+import User from '../models/user'
 
 interface status {
     full: boolean,
@@ -296,6 +297,29 @@ export class GameRoom {
         }
     }
 
+    private async updateDB(winner: number) {
+        const playerADatabase = await User.findOne({username: this.playerA.playerUsername})
+        const playerBDatabase = await User.findOne({username: this.playerB.playerUsername})
+        if (playerADatabase){
+            playerADatabase.profile.games += 1;
+            if(winner == 0){
+                playerADatabase.profile.wins += 1;
+            }else if (winner == 1){
+                playerADatabase.profile.loses += 1;
+            }
+            playerADatabase.save();
+        }
+        if (playerBDatabase){
+            playerBDatabase.profile.games += 1;
+            if(winner == 1){
+                playerBDatabase.profile.wins += 1;
+            }else if (winner == 0){
+                playerBDatabase.profile.loses += 1;
+            }
+            playerBDatabase.save()
+        }
+    }
+
     /**
      * Calculates the game state
      */
@@ -305,15 +329,17 @@ export class GameRoom {
             this.playerB.HP = 0;  // Make sure the lowest HP can be is 0
             this.active = false;
             this.winner = 2;  // draw
-
+            this.updateDB(this.winner);
         } else if (this.playerA.HP <= 0) {
             this.playerA.HP = 0;  // Make sure the lowest HP can be is 0
             this.active = false;
             this.winner = 1;
+            this.updateDB(this.winner);
         } else if (this.playerB.HP <= 0) {
             this.playerB.HP = 0;  // Make sure the lowest HP can be is 0
             this.active = false;
             this.winner = 0;
+            this.updateDB(this.winner);
         }
     }
 
@@ -344,10 +370,10 @@ export class GameRoom {
         }
         var moveArray: Array<playerMove> = [];  // Hold the array of moves ran
         // We ignore Shield and skip as they're delt by the calc flow for each player, however we send the move
-        if((playerAMove.moveType === 2) || (playerAMove.moveType === 3)){
+        if ((playerAMove.moveType === 2) || (playerAMove.moveType === 3)) {
             moveArray.push({ player: 0, move: playerAMove });
         }
-        if((playerBMove.moveType === 2) || (playerBMove.moveType === 3)){
+        if ((playerBMove.moveType === 2) || (playerBMove.moveType === 3)) {
             moveArray.push({ player: 1, move: playerBMove });
         }
         // Check and apply any items a player might have used
@@ -393,7 +419,7 @@ export class GameRoom {
                 }
             }
             return this.status()
-        }else if (playerAMove.moveType === 0) {
+        } else if (playerAMove.moveType === 0) {
             this.playerAMoveCalc(playerAMove, playerBMove);  // Run player A's move calc
             moveArray.push({ player: 0, move: playerAMove });
             this.calculateGameState();  // Calculate Stats
@@ -407,18 +433,18 @@ export class GameRoom {
         return this.status();
     }
 
-    public getPlayerAStatus(){
-        if(this.playerA != null){
+    public getPlayerAStatus() {
+        if (this.playerA != null) {
             return this.playerA.getStatus();
-        }else{
+        } else {
             return null
         }
     }
 
-    public getPlayerBStatus(){
-        if(this.playerB != null){
+    public getPlayerBStatus() {
+        if (this.playerB != null) {
             return this.playerB.getStatus();
-        }else{
+        } else {
             return null
         }
     }
