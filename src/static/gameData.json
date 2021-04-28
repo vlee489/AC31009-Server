@@ -1,5 +1,5 @@
 {
-    "version": "0.0.6",
+    "version": "0.0.10",
     "serverSupport": "0.0.1",
     "clientSupport": "0.0.1",
     "stats":[
@@ -24,83 +24,83 @@
         {
             "id": 1,
             "name": "Gatron",
-            "description": "A tank that moves slow, but can do a lot of damage",
-            "health": 50,
+            "description": "A knight with a sword",
+            "health": 80,
             "shields": 4,
             "idleAnimationID": 1,
             "deathAnimationID": 4,
             "attacks": [
-                {
-                    "id": 1,
-                    "name": "quick attack",
-                    "description": "Quick attack to your opponent.",
-                    "HPDamage": 10,
-                    "recoil": 0,
-                    "speed": 60,
-                    "animationID": 1
-                },
-                {
-                    "id": 2,
-                    "name": "Grunt Punch",
-                    "description": "High damage attack, but slow to initate.",
-                    "HPDamage": 30,
-                    "recoil": 0,
-                    "speed": 10,
-                    "animationID": 2
-                },
-                {
-                    "id": 3,
-                    "name": "Underhand Tackle",
-                    "description": "Tackle your oppoent to the ground.",
-                    "HPDamage": 20,
-                    "recoil": 10,
-                    "speed": 50,
-                    "animationID": 3
-                }
+            {
+                "id": 1,
+                "name": "Quick Slash",
+                "description": "Quick attack to your opponent.",
+                "HPDamage": 30,
+                "recoil": 5,
+                "speed": 60,
+                "animationID": 1
+            },
+            {
+                "id": 2,
+                "name": "Wack",
+                "description": "High damage attack, but slow to initate.",
+                "HPDamage": 40,
+                "recoil": 10,
+                "speed": 20,
+                "animationID": 2
+            },
+            {
+                "id": 3,
+                "name": "Jump Kick",
+                "description": "Inflict a quick jump kick to your oppoent",
+                "HPDamage": 15,
+                "recoil": 0,
+                "speed": 90,
+                "animationID": 3
+            }
             ]
         },
         {
             "id": 2,
-            "name": "Sova",
-            "description": "A fast agile hero that can move quickly through the battlefield.",
+            "name": "Maxmus",
+            "description": "The wise old wizard, who been through it all over the years.",
             "health": 100,
-            "shields": 1,
+            "shields": 2,
             "idleAnimationID": 1,
             "deathAnimationID": 4,
             "attacks": [
-                {
-                    "id": 1,
-                    "name": "quick attack",
-                    "description": "Quick attack to your opponent.",
-                    "HPDamage": 5,
-                    "recoil": 0,
-                    "speed": 100,
-                    "animationID": 1
-                },
-                {
-                    "id": 2,
-                    "name": "Fly Punch",
-                    "description": "Quick punch to your oppoent's body.",
-                    "HPDamage": 10,
-                    "recoil": 0,
-                    "speed": 80,
-                    "animationID": 2
-                },
-                {
-                    "id": 3,
-                    "name": "Sword Release",
-                    "description": "Sword that can be deployed with relative speed",
-                    "HPDamage": 20,
-                    "recoil": 0,
-                    "speed": 70,
-                    "animationID": 3
-                }
+            {
+                "id": 1,
+                "name": "Explo",
+                "description": "Send a shockwave through the battlefield",
+                "HPDamage": 30,
+                "recoil": 0,
+                "speed": 50,
+                "animationID": 1
+            },
+            {
+                "id": 2,
+                "name": "Blast",
+                "description": "Send a blast towards your oppoent",
+                "HPDamage": 20,
+                "recoil": 0,
+                "speed": 75,
+                "animationID": 2
+            },
+            {
+                "id": 3,
+                "name": "Cane Hit",
+                "description": "Hit your opponent with your cane.",
+                "HPDamage": 15,
+                "recoil": 0,
+                "speed": 90,
+                "animationID": 3
+            }
             ]
         },
         {
             "id": 3,
-            "name": "Ranger",
-            "description": "A trained long range assign armed with a bow",
+            "name": "Boxer",
+            "description": "Robot combat robot with a range of attacks",
             "health": 80,
             "shields": 2,
             "idleAnimationID": 1,
@@ -108,29 +108,29 @@
             "attacks": [
                 {
                     "id": 1,
-                    "name": "quick shot",
-                    "description": "Quick shot to your oppent",
-                    "HPDamage": 10,
+                    "name": "arm puch",
+                    "description": "Quick attack to your opponent.",
+                    "HPDamage": 5,
                     "recoil": 0,
-                    "speed": 90,
+                    "speed": 100,
                     "animationID": 1
                 },
                 {
                     "id": 2,
-                    "name": "Full Charge",
-                    "description": "A bow shot with a full charge, but takes longer to charge up",
+                    "name": "Co-Smash",
+                    "description": "Combo attack your oppent",
                     "HPDamage": 30,
                     "recoil": 0,
-                    "speed": 50,
+                    "speed": 30,
                     "animationID": 2
                 },
                 {
                     "id": 3,
-                    "name": "Self Defense",
-                    "description": "Quick defense attack against your attacker",
-                    "HPDamage": 5,
+                    "name": "Box Dash",
+                    "description": "Dash across the screen to wipe out you oppent.",
+                    "HPDamage": 20,
                     "recoil": 0,
-                    "speed": 100,
+                    "speed": 20,
                     "animationID": 3
                 }
             ]
@@ -155,7 +155,7 @@
             "affect":[
                 {
                     "status": 0,
-                    "edit": 25
+                    "edit": 40
                 }
             ]
         },
