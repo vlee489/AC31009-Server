@@ -121,16 +121,16 @@
                     "description": "Combo attack your oppent",
                     "HPDamage": 30,
                     "recoil": 0,
-                    "speed": 30,
+                    "speed": 45,
                     "animationID": 2
                 },
                 {
                     "id": 3,
                     "name": "Box Dash",
-                    "description": "Dash across the screen to wipe out you oppent.",
+                    "description": "Dash to damge you enemy.",
                     "HPDamage": 20,
                     "recoil": 0,
-                    "speed": 20,
+                    "speed": 80,
                     "animationID": 3
                 }
             ]
@@ -151,7 +151,7 @@
         {
             "id": 2,
             "name": "HP Smoothie",
-            "description": "Increase your current HP by 50",
+            "description": "Increase your current HP.",
             "affect":[
                 {
                     "status": 0,
@@ -162,7 +162,7 @@
         {
             "id": 3,
             "name": "Speed Candy",
-            "description": "Increase you speed of attack for the game",
+            "description": "Increase you speed of attack.",
             "affect":[
                 {
                     "status": 2,
