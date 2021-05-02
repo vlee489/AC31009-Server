@@ -391,7 +391,7 @@ export class GameRoom {
             // If both players are making an attack
             const Aattack = this.getAttack(this.playerA.heroID, playerAMove.id);
             const Battack = this.getAttack(this.playerB.heroID, playerBMove.id);
-            if (Aattack.speed > Battack.speed) {  // If the attack speed of A > B
+            if ((Aattack.speed + this.playerA.speed) > (Battack.speed + this.playerA.speed)) {  // If the attack speed of A > B
                 this.playerAMoveCalc(playerAMove, playerBMove);  // Run player A's move calc
                 moveArray.push({ player: 0, move: playerAMove });
                 this.calculateGameState();  // Calculate Stats
