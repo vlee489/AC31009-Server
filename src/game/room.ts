@@ -179,6 +179,7 @@ export class GameRoom {
                     } else {
                         // If other player is using shield subtract one from shield
                         this.playerB.shield -= 1;
+                        this.playerA.HP -= attack.recoil; // take away recoil
                     }
                 } else {  // other player isn't using sheild
                     this.playerB.HP -= attack.HPDamage;  // Subtrack damage delt from other player's health
@@ -248,6 +249,7 @@ export class GameRoom {
                     } else {
                         // If other player is using shield subtract one from shield
                         this.playerA.shield -= 1;
+                        this.playerB.HP -= attack.recoil; // take away recoil
                     }
                 } else {  // other player isn't using sheild
                     this.playerA.HP -= attack.HPDamage;  // Subtrack damage delt from other player's health
@@ -429,6 +431,8 @@ export class GameRoom {
             moveArray.push({ player: 1, move: playerBMove })
             this.calculateGameState();  // Calculate Stats
             this.sendMoveResponse(moveArray);  // send to clients
+        }else{
+            this.sendMoveResponse(moveArray);
         }
         return this.status();
     }
