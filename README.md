@@ -36,6 +36,10 @@ in development mode.
 2. `cd` into the main directory of the project and install your requirements using `yarn install`
 3. Setup your enviorment variables, (*for dev you can create a .env file in the root of the dir to be loaded in*)
 
+## Database setup
+You need to give the enviorment veriable a MongoDB URI to access the database, no tables need to be created as they'll be automatically created when the
+server first used database.
+
 ### Dev operation
 
 To run the program while in development you can do `yarn dev` this is will launch a nodemon instance with ts-node to start the program. When any changes are made to the projects typescript or JSON files, nodemon will auto reload the program.
