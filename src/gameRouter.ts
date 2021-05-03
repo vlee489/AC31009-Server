@@ -38,6 +38,22 @@ export function openLobby(open: boolean): string {
     return `${newRoom.roomCode}`;
 }
 
+/**
+ * Close lobbies that have been open for 1h +
+ */
+export function closeLobbies(){
+    for(const key in masterLobbies){
+        var lobby = masterLobbies[key].game as GameRoom;
+        if(Math.abs(lobby.openTime.diffNow('hours').toObject().hours) > 1){
+            console.log(`Closing lobby ${key}`)
+            delete masterLobbies[`${key}`];
+            if (key in openLobbies){
+                delete openLobbies[`${key}`];
+            }
+        }
+    }
+}
+
 export function checkRoomCode(lobbyID: string, playerID: string): boolean{
     const room = masterLobbies[`${lobbyID}`] as gameData;  // Get room
     if(room){

@@ -12,13 +12,19 @@ if (process.env.NODE_ENV !== 'production') {
 // Server related imports
 import http from 'http';
 import https from 'https';
-import fs from 'fs'
+import fs from 'fs';
 const express = require('express');
 import ws from 'ws';
-import routes from './routes'
+import routes from './routes';
 // Functions
-import { validateJWT } from './functions/token'
-import { joinLobby, setNextMove } from './gameRouter'
+import { validateJWT } from './functions/token';
+import { joinLobby, setNextMove, closeLobbies } from './gameRouter';
+import schedule from 'node-schedule';
+
+// Run every hour
+const job = schedule.scheduleJob('0 * * * *', function () {
+    closeLobbies()
+});
 
 // Express App
 const app = express();
@@ -57,6 +63,8 @@ httpServer.listen(`${process.env.PORT}`, () => {
 });
 
 var wssClients = {}  // Object of Websocket clients
+
+
 
 wss.on('connection', async function connection(ws, request, client) {
     if ('authorization' in request.headers) {
